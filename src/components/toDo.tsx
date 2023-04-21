@@ -4,8 +4,9 @@ import styled from "styled-components";
 type Props = {};
 
 function toDo({}: Props) {
-  const [ToDos, setToDos] = useState<string[]>([]);
+  const [ToDos, setToDos] = useState<string[]>(["aaaaaa"]);
   const [currentToDo, setCurrentToDo] = useState<string>("");
+  const [isToDoCompleted, setIsToDoCompleted] = useState<boolean>(false);
 
   const handleToDoInputChange = (
     event: React.ChangeEvent<HTMLInputElement>
@@ -34,27 +35,104 @@ function toDo({}: Props) {
           value={currentToDo}
           onChange={handleToDoInputChange}
         />
-        <button type="submit">Add ToDo</button>
+        <button className="btn" type="submit">
+          Add ToDo
+        </button>
       </form>
       <ul>
         {ToDos.map((ToDo, index) => (
-          <li key={index}>{ToDo}</li>
+          <li key={index}>
+            <div className="todo__task">{ToDo}</div>
+            <div className="todo__status">
+              <p>Status:</p>{" "}
+              <p>{isToDoCompleted ? "COMPLETE" : "IN PROGRESS"}</p>
+            </div>
+          </li>
         ))}
       </ul>
-      <button onClick={handleDelete}>Delete Completed</button>
+      <button className="btn" onClick={handleDelete}>
+        Remove All
+      </button>
     </Wrapper>
   );
 }
 
 const Wrapper = styled.div`
-  max-width: 40%;
+  max-width: 60%;
   margin: 10vh auto;
   background: lightgreen;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 20px;
+  padding: 2rem 6rem;
   gap: 3rem;
+
+  h1 {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: darkgreen;
+  }
+
+  ul {
+    width: 100%;
+    list-style: none;
+  }
+
+  li {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 70px;
+    background: white;
+    border-radius: 20px;
+    border: 2px solid orange;
+    padding: 1rem 2rem;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: grey;
+    margin-bottom: 1rem;
+
+    .todo {
+      &__task {
+        width: 70%;
+      }
+
+      &__status {
+        padding-left: 1rem;
+        width: 30%;
+        border-left: 2px solid orange;
+        color: orange;
+
+        &.completed {
+          border-left: 2px solid orange;
+          color: orange;
+        }
+      }
+    }
+  }
+
+  form {
+    display: flex;
+    gap: 2rem;
+    height: 50px;
+    width: 100%;
+    input {
+      width: 70%;
+      height: 100%;
+      border-radius: 20px;
+      border: 2px solid darkgreen;
+    }
+  }
+  .btn {
+    width: 30%;
+    height: 50px;
+    border-radius: 20px;
+    border: 2px solid blue;
+    background: lightblue;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: white;
+  }
 `;
 
 export default toDo;
