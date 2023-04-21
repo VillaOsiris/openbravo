@@ -1,15 +1,14 @@
 import styled from "styled-components";
+import ToDo from "./components/toDo";
 
 function App() {
   return (
     <Wrapper>
-      <h1>Hello World</h1>
+      <ToDo />
     </Wrapper>
   );
 }
 
-const Wrapper = styled.div`
-  color: blue;
-`;
+const Wrapper = styled.div``;
 
 export default App;
