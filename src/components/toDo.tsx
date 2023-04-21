@@ -49,17 +49,20 @@ function toDo({}: Props) {
       </form>
       <ul>
         {ToDos.map((todo, id) => (
-          <li key={id}>
+          <li
+            key={id}
+            className={`todo__task ${
+              todo.isCompleted ? "completed" : "inprogress"
+            }`}
+          >
             <div
-              className={`todo__task ${
-                todo.isCompleted ? "completed" : "in-progress"
-              }`}
+              className="todo__task--text"
               onClick={() => handleToggleCompleted(id)}
             >
               {todo.text}
             </div>
 
-            <div className="todo__status">
+            <div className="todo__task--status">
               <p>Status:</p>
               <p>{todo.isCompleted ? "COMPLETE" : "IN PROGRESS"}</p>
             </div>
@@ -94,35 +97,37 @@ const Wrapper = styled.div`
     list-style: none;
   }
 
-  li {
+  .todo__task {
     display: flex;
     align-items: center;
     width: 100%;
     height: 70px;
     background: white;
     border-radius: 20px;
-    border: 2px solid orange;
     padding: 1rem 2rem;
     font-size: 1.5rem;
     font-weight: bold;
     color: grey;
     margin-bottom: 1rem;
+    border: 2px solid orange;
 
-    .todo {
-      &__task {
-        width: 70%;
-      }
+    &--text {
+      width: 70%;
+    }
 
-      &__status {
-        padding-left: 1rem;
-        width: 30%;
-        border-left: 2px solid orange;
-        color: orange;
+    &--status {
+      padding-left: 1rem;
+      width: 30%;
+      border-left: 2px solid orange;
+      color: orange;
+    }
 
-        &.completed {
-          border-left: 2px solid orange;
-          color: orange;
-        }
+    &.completed {
+      border: 2px solid green;
+
+      .todo__task--status {
+        border-left: 2px solid green;
+        color: green;
       }
     }
   }
