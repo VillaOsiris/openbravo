@@ -77,7 +77,7 @@ function toDo({}: Props) {
 }
 
 const Wrapper = styled.div`
-  max-width: 60%;
+  max-width: 75%;
   margin: 10vh auto;
   background: lightgreen;
   display: flex;
@@ -105,19 +105,19 @@ const Wrapper = styled.div`
     background: white;
     border-radius: 20px;
     padding: 1rem 2rem;
-    font-size: 1.5rem;
+    font-size: 1.2rem;
     font-weight: bold;
     color: grey;
     margin-bottom: 1rem;
     border: 2px solid orange;
 
     &--text {
-      width: 70%;
+      flex: 2;
     }
 
     &--status {
+      flex: 1;
       padding-left: 1rem;
-      width: 30%;
       border-left: 2px solid orange;
       color: orange;
     }
@@ -145,7 +145,7 @@ const Wrapper = styled.div`
     }
   }
   .btn {
-    width: 30%;
+    width: 200px;
     height: 50px;
     border-radius: 20px;
     border: 2px solid blue;
@@ -153,6 +153,10 @@ const Wrapper = styled.div`
     font-size: 1.5rem;
     font-weight: bold;
     color: white;
+  }
+
+  @media (max-width: 768px) {
+    max-width: 100%;
   }
 `;
 
