@@ -4,9 +4,10 @@ import styled from "styled-components";
 type Props = {};
 
 function toDo({}: Props) {
-  const [ToDos, setToDos] = useState<string[]>(["aaaaaa"]);
+  const [ToDos, setToDos] = useState<{ text: string; isCompleted: boolean }[]>([
+    { text: "aaaaaa", isCompleted: false },
+  ]);
   const [currentToDo, setCurrentToDo] = useState<string>("");
-  const [isToDoCompleted, setIsToDoCompleted] = useState<boolean>(false);
 
   const handleToDoInputChange = (
     event: React.ChangeEvent<HTMLInputElement>
@@ -17,13 +18,20 @@ function toDo({}: Props) {
   const handleAddToDo = (event: React.ChangeEvent<HTMLInputElement>) => {
     event.preventDefault();
     if (currentToDo) {
-      setToDos([...ToDos, currentToDo]);
+      setToDos([...ToDos, { text: currentToDo, isCompleted: false }]);
       setCurrentToDo("");
     }
   };
 
-  const handleDelete = () => {
-    setToDos([]);
+  const handleDeleteCompleted = () => {
+    const newToDos = ToDos.filter((todo) => !todo.isCompleted);
+    setToDos(newToDos);
+  };
+
+  const handleToggleCompleted = (id: number) => {
+    const newToDos = [...ToDos];
+    newToDos[id].isCompleted = !newToDos[id].isCompleted;
+    setToDos(newToDos);
   };
 
   return (
@@ -40,17 +48,25 @@ function toDo({}: Props) {
         </button>
       </form>
       <ul>
-        {ToDos.map((ToDo, index) => (
-          <li key={index}>
-            <div className="todo__task">{ToDo}</div>
+        {ToDos.map((todo, id) => (
+          <li key={id}>
+            <div
+              className={`todo__task ${
+                todo.isCompleted ? "completed" : "in-progress"
+              }`}
+              onClick={() => handleToggleCompleted(id)}
+            >
+              {todo.text}
+            </div>
+
             <div className="todo__status">
-              <p>Status:</p>{" "}
-              <p>{isToDoCompleted ? "COMPLETE" : "IN PROGRESS"}</p>
+              <p>Status:</p>
+              <p>{todo.isCompleted ? "COMPLETE" : "IN PROGRESS"}</p>
             </div>
           </li>
         ))}
       </ul>
-      <button className="btn" onClick={handleDelete}>
+      <button className="btn" onClick={handleDeleteCompleted}>
         Remove All
       </button>
     </Wrapper>
